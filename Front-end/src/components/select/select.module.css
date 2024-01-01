@@ -1,0 +1,23 @@
+.select-container {
+  margin: 10px; /* Ajusta según sea necesario */
+}
+
+/* Estilo para el propio elemento select */
+.select-element {
+  width: 100%; /* O ajusta el ancho según tus preferencias */
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.select-option {
+  display: inline-block;
+  margin-right: 10px; /* Ajusta el espacio entre las opciones */
+}
+
+/* Estilo para el hover sobre las opciones del select */
+.select-option:hover {
+  background-color: #f0f0f0; /* Cambia el color al pasar el mouse */
+}

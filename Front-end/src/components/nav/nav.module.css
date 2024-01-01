@@ -1,0 +1,11 @@
+/* nav.module.css */
+
+.nav {
+  background-color: #ffffff;
+  padding: 15px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: auto; /* Alinea el nav en el borde derecho */
+  margin-right: 10px; /* Ajusta el margen derecho según tus necesidades */
+}

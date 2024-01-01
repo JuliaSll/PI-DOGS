@@ -1,0 +1,19 @@
+/* Mantén los estilos existentes para el resto de los botones */
+.pagination button {
+  padding: 10px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 5px; /* Redondea las esquinas */
+}
+
+.pagination button.active {
+  background-color: #3498db; /* Azul para el fondo activo */
+  color: white;
+  border: 1px solid #3498db;
+}
+
+.pagination button:hover {
+  background-color: #ddd;
+}
