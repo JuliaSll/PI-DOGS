@@ -10,19 +10,17 @@
 }
 
 .backgroundImage {
-  /* Puedes definir aquí las propiedades de la imagen de fondo */
   background-image: url("https://media.vogue.es/photos/5cc73fddf3fa8cff867a527d/master/w_1600%2Cc_limit/vogue_news_465555728.jpg");
 }
 
 .title {
   font-size: 3rem;
   text-align: center;
-  /* Puedes agregar más estilos según tus preferencias */
 }
 
 .button {
-  background-color: #3498db; /* Color de fondo */
-  color: white; /* Color del texto */
+  background-color: #3498db;
+  color: white;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
@@ -31,5 +29,5 @@
 }
 
 .button:hover {
-  background-color: #2980b9; /* Cambia el color al pasar el mouse */
+  background-color: #2980b9;
 }

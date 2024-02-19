@@ -1,9 +1,10 @@
 const { Dog, Temperaments } = require("../db");
-require("dotenv").config();
+const { Sequelize } = require("sequelize");
 const axios = require("axios");
+require("dotenv").config();
+
 const apiKey = process.env.API_KEY;
 const apiUrl = "https://api.thedogapi.com/v1/breeds";
-const { Sequelize } = require("sequelize");
 
 const getDogsByName = async (req, res) => {
   try {
@@ -20,7 +21,7 @@ const getDogsByName = async (req, res) => {
           [Sequelize.Op.iLike]: `%${name}%`,
         },
       },
-      include: Temperaments, // Incluimos los temperamentos asociados
+      include: Temperaments,
     });
 
     const apiResponse = await axios.get(apiUrl, {

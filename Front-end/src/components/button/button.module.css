@@ -8,9 +8,9 @@
   text-decoration: none;
   transition: background-color 0.3s;
   margin: 0 10px;
-  font-size: 0.8rem; /* Ajusta el tamaño de la fuente según sea necesario */
-  font-weight: bold; /* Opcional: agrega negrita al texto */
-  text-transform: uppercase; /* Opcional: convierte el texto a mayúsculas */
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .button:hover {

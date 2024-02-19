@@ -1,4 +1,4 @@
-// Nav.js
+
 import React from "react";
 import Button from "../button/Button";
 import style from "./nav.module.css";

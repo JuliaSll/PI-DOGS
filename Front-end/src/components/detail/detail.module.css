@@ -1,27 +1,30 @@
-/* detail.module.css */
+h2 {
+  font-size: 1.5rem;
+  color: #3498db;
+  margin-bottom: 10px;
+  text-align: center;
+}
 
-/* Estilo básico para el componente Detail */
 .detail-container {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
-/* Estilo para los elementos de texto en Detail */
 .detail-text {
-  font-size: 1rem;
-  margin-bottom: 8px;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: #333;
 }
 
-/* Estilo para la imagen en Detail */
 .detail-image {
   width: 100%;
   height: auto;
-  border-radius: 5px;
-  margin-top: 10px;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-/* Ajustes adicionales según sea necesario */

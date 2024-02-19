@@ -1,4 +1,4 @@
-// SearchBar.js
+
 import React, { useState } from "react";
 import style from "./searchbar.module.css";
 
@@ -8,7 +8,12 @@ const SearchBar = ({ onSearch }) => {
   const handleChange = (event) => {
     setSearchQuery(event.target.value);
   };
-
+  const handleSearch = () => {
+   
+    
+      onSearch(searchQuery);
+    
+  };
   return (
     <div className={style["search-container"]}>
       <input
@@ -20,7 +25,7 @@ const SearchBar = ({ onSearch }) => {
       />
       <button
         className={style["search-button"]}
-        onClick={() => onSearch(searchQuery)}
+        onClick={handleSearch}
       >
         Buscar
       </button>

@@ -10,10 +10,10 @@ const express = require("express");
 const router = express.Router();
 
 // routes
-router.get("/dogs", getDogs); //ya esta
-router.get("/dogs/name", getDogsByName); //ya esta
-router.get("/dogs/:idRaza", getCharById); // ya esta
-router.post("/dogs", postDog); // ya esta
-router.get("/temperaments", getTemperaments); //ya esta
+router.get("/dogs", getDogs);
+router.get("/dogs/name", getDogsByName);
+router.get("/dogs/:idRaza", getCharById);
+router.post("/dogs", postDog);
+router.get("/temperaments", getTemperaments);
 
 module.exports = { router };

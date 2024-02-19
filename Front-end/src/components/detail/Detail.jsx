@@ -1,4 +1,3 @@
-// Detail.jsx
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -29,13 +28,12 @@ const Detail = () => {
     const adaptedDog = { ...data };
 
     if (data.height && data.height.metric) {
-      adaptedDog.height = data.height.metric;
+      adaptedDog.height = `${data.height.metric} cm`;
     }
-
+  
     if (data.weight && data.weight.metric) {
-      adaptedDog.weight = data.weight.metric;
+      adaptedDog.weight = `${data.weight.metric} kg`;
     }
-
     if (data.temperament) {
       adaptedDog.temperament = data.temperament;
     } else if (data.Temperaments && Array.isArray(data.Temperaments)) {

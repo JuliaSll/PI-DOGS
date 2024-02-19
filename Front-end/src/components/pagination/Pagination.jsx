@@ -1,4 +1,4 @@
-// pagination.module.css
+
 import style from './pagination.module.css';
 
 const Pagination = ({ dogsPerPage, totalDogs, currentPage, onPageChange }) => {

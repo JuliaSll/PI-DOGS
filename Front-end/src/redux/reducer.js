@@ -1,4 +1,3 @@
-// reducer.js
 import {
   SET_ORIGIN_FILTER,
   SET_ORDER_NAME,
@@ -12,13 +11,11 @@ export const extractNumericWeight = (weight) => {
   }
 
   if (typeof weight === "object") {
-    // Si el peso es un objeto con la propiedad "metric", usa ese valor
     const metricValues = weight.metric.split(" - ");
     const numericValue = parseFloat(metricValues[0]);
 
     return isNaN(numericValue) ? 0 : numericValue;
   } else if (typeof weight === "string") {
-    // Si el peso es una cadena, toma el primer valor antes del separador "-"
     const imperialValues = weight.split(" - ");
     const numericValue = parseFloat(imperialValues[0]);
 
@@ -29,8 +26,8 @@ export const extractNumericWeight = (weight) => {
 };
 
 const initialState = {
-  razasOriginales: [], // Guardaremos los datos originales sin cambios
-  razasFiltradas: [], // Mantendremos los datos filtrados
+  razasOriginales: [],
+  razasFiltradas: [],
   orderName: "Ascendente",
   orderWeight: "Ascendente",
   selectedOrigin: "all",
@@ -43,22 +40,17 @@ const reducer = (state = initialState, action) => {
       const { payload } = action;
 
       if (!payload || payload === "") {
-        // Si el temperamento es vacío, mostrar todas las razas originales
         return {
           ...state,
           filteredDogs: state.razasOriginales,
-          selectedTemperament: payload, // Actualizado aquí
+          selectedTemperament: payload,
         };
       }
 
-      // Filtrar por temperamento
       const filterByTemperament = state.razasOriginales.filter((dog) => {
         const dogTemperament = dog.temperament;
 
         if (!dogTemperament) {
-          console.error(
-            `Undefined temperament for dog: ${JSON.stringify(dog)}`
-          );
           return false;
         }
 
@@ -74,17 +66,19 @@ const reducer = (state = initialState, action) => {
         filteredDogs: filterByTemperament,
         selectedTemperament: action.payload,
       };
+
     case SET_ORDER_NAME:
-      const dogsOrderName = state.razasOriginales
+      const orderedDogsName = state.razasOriginales
         .slice()
         .sort((a, b) =>
           action.payload === "Ascendente"
             ? a.name.localeCompare(b.name)
             : b.name.localeCompare(a.name)
         );
+
       return {
         ...state,
-        razasFiltradas: dogsOrderName,
+        orderedResults: orderedDogsName,
         orderName: action.payload,
       };
 

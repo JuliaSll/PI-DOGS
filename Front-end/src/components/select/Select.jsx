@@ -1,4 +1,4 @@
-// Select.js
+
 import React from "react";
 import style from "./select.module.css";
 

@@ -1,9 +1,5 @@
 require("dotenv").config();
-const axios = require("axios");
 const { Dog, Temperaments } = require("../db");
-
-const apiKey = process.env.API_KEY;
-const apiUrl = "https://api.thedogapi.com/v1/breeds";
 
 const postDog = async (req, res) => {
   try {
@@ -21,19 +17,6 @@ const postDog = async (req, res) => {
       });
     }
 
-    const apiDogsResponse = await axios.get(`${apiUrl}/dogs?name=${name}`, {
-      headers: {
-        "x-api-key": apiKey,
-      },
-    });
-    const existingapiDogs = apiDogsResponse.data;
-    if (existingapiDogs.length > 0) {
-      return res.status(400).json({
-        error:
-          "Ya existe un Perro de esta raza en la API. Por favor, elija otra raza.",
-      });
-    }
-    // Obtén el último ID de la base de datos y calcula el siguiente
     const lastDog = await Dog.findOne({
       order: [["id", "DESC"]],
     });
@@ -43,7 +26,6 @@ const postDog = async (req, res) => {
 
     const originalId = nextId.toString();
 
-    console.log("Antes de la creación del nuevo perro");
     const newDog = await Dog.create({
       name,
       image,
@@ -52,7 +34,6 @@ const postDog = async (req, res) => {
       lifeSpan,
       id: `db${originalId}`,
     });
-    console.log("Después de la creación del nuevo perro");
 
     const temperamentsArray = Array.isArray(temperament)
       ? temperament
@@ -60,23 +41,23 @@ const postDog = async (req, res) => {
 
     const createdTemperaments = await Promise.all(
       temperamentsArray.map(async (temp) => {
-        // Buscar o crear el temperamento en la base de datos local
-        const [createdTemperament, created] = await Temperaments.findOrCreate({
-          where: { name: temp.trim() }, // Trim para eliminar espacios en blanco
+        const [createdTemperament] = await Temperaments.findOrCreate({
+          where: { name: temp.trim() },
         });
-        // Devolver el ID del temperamento creado o existente
+
         return createdTemperament.id;
       })
     );
-    // Asocia el perro a los temperamentos en la base de datos local
+
+    //setTemperaments se utiliza para establecer las asociaciones entre el perro y los temperamentos
     await newDog.setTemperaments(createdTemperaments);
 
-    // Obtiene los nombres de los temperamentos asociados al perro
+    //getTemperaments se utiliza para recuperar los temperamentos asociados al perro después de haber sido creados y asociados
     const dogTemperaments = await newDog.getTemperaments();
     const temperamentNames = dogTemperaments.map((temp) => temp.name);
 
     const temperamentsString = temperamentNames.join(",");
-    // Construye la respuesta que incluye el array de temperamentos
+
     const response = {
       id: newDog.id,
       name: newDog.name,
@@ -89,7 +70,6 @@ const postDog = async (req, res) => {
 
     return res.status(201).json(response);
   } catch (error) {
-    console.error("Error en el servidor:", error);
     return res.status(500).send(error.message);
   }
 };

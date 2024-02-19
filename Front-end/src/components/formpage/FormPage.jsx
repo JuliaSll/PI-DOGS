@@ -3,18 +3,18 @@ import validation from "./validation";
 import { Link } from 'react-router-dom';
 import style from './formpage.module.css';
 
-const FormPage = () => {
+const FormPage = ({temperaments}) => {
   const [formData, setFormData] = useState({
     name: '',
     image: '',
     height: '',
     weight: '',
     lifeSpan: '',
-    temperament: '',
+    temperament: [],
   });
 
   const [errors, setErrors] = useState({});
-  const [apiError, setApiError] = useState(null); // Nuevo estado para el error de la API
+  const [apiError, setApiError] = useState(null); 
   const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
@@ -23,19 +23,35 @@ const FormPage = () => {
   }, [formData]);
 
   const handleChange = (event) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [event.target.name]: event.target.value,
-    }));
+    if (event.target.name === 'temperament') {
+      
+      const selectedOption = event.target.value;
+      const updatedTemperament = formData.temperament.includes(selectedOption)
+      ? formData.temperament.filter((temp) => temp !== selectedOption)
+      : selectedOption !== '' 
+        ? [...formData.temperament, selectedOption]
+        : formData.temperament;
+  
+      setFormData((prevData) => ({
+        ...prevData,
+        [event.target.name]: updatedTemperament,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [event.target.name]: event.target.value,
+      }));
+    }
   };
-
+  
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     const dataToSend = {
       ...formData,
       lifeSpan: `${formData.lifeSpan} years`,
     };
-
+    
     try {
       const response = await fetch('http://localhost:3001/dogs', {
         method: 'POST',
@@ -52,22 +68,22 @@ const FormPage = () => {
           weight: '',
           lifeSpan: '',
           image: '',
-          temperament: '',
+          temperament: [],
         });
         setErrors({});
         setApiError(null);
-        setSuccessMessage('¡La raza ha sido creada correctamente!');// Limpiar el error de la API
+        setSuccessMessage('¡La raza ha sido creada correctamente!');
       } else {
         const responseData = await response.json();
-        setApiError(responseData.error || 'Error desconocido'); // Establecer el error de la API
+        setApiError(responseData.error || 'Error desconocido'); 
         setSuccessMessage(null); 
       }
     } catch (error) {
-      setApiError('Error al conectar con la API'); // Establecer un mensaje de error genérico
+      setApiError('Error al conectar con la API'); 
     }
   };
   useEffect(() => {
-    // Limpia el mensaje de éxito después de un tiempo (por ejemplo, 5 segundos)
+    
     const timeout = setTimeout(() => {
       setSuccessMessage(null);
     }, 5000);
@@ -76,105 +92,119 @@ const FormPage = () => {
   }, [successMessage]);
 
   const isFormValid = Object.keys(errors).length === 0;
-    return(
+   
+  
+return(
 
       <div className={style['form-container']}>
-           <Link to="/home">
-                <button className={style['form-button']}>Volver a la página principal</button>
-              </Link>
+        <Link to="/home">
+          <button className={style['form-button']}>Volver a la página principal</button>
+        </Link>
             <h1>Form Page</h1>
             {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
             <form onSubmit={handleSubmit}>
-            <label htmlFor="name" className={style['form-label']}>
-                 Name:
-                 </label>
-                 <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          className={style['form-input']}
-        />
+            
+            
+          <label htmlFor="name" className={style['form-label']}>
+            Name:
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className={style['form-input']}
+          />
             {errors.name && <p className={style['error-message']}>{errors.name}</p>}
 
 
 
-               
-
-            <label htmlFor="height" className={style['form-label']}>
+          <label htmlFor="height" className={style['form-label']}>
             Height:
-            </label>
-        <input
-          type="text"
-          name="height"
-          value={formData.height}
-          onChange={handleChange}
-          className={style['form-input']}
-        />
-        {errors.height && <p className={style['error-message']}>{errors.height}</p>}
+          </label>
+          <input
+            type="text"
+            name="height"
+            value={formData.height}
+            onChange={handleChange}
+            className={style['form-input']}
+          />
+            {errors.height && <p className={style['error-message']}>{errors.height}</p>}
 
 
 
-               
+          <label htmlFor="weight" className={style['form-label']}>
+            Weight:
+          </label>
+          <input
+            type="text"
+            name="weight"
+            value={formData.weight}
+            onChange={handleChange}
+            className={style['form-input']}
+          />
+            {errors.weight && <p className={style['error-message']}>{errors.weight}</p>}
 
 
-        <label htmlFor="weight" className={style['form-label']}>
-          Weight:
-        </label>
-        <input
-          type="text"
-          name="weight"
-          value={formData.weight}
-          onChange={handleChange}
-         className={style['form-input']}
-                />
-                {errors.weight && <p className={style['error-message']}>{errors.weight}</p>}
+    
+          <label htmlFor="image" className={style['form-label']}>
+            Image:
+          </label>
+          <input
+            type="text"
+            name="image"
+            value={formData.image}
+            onChange={handleChange}
+            className={style['form-input']}
+          />
+            {errors.image && <p className={style['error-message']}>{errors.image}</p>}
 
 
-                <label htmlFor="image" className={style['form-label']}>
-          Image:
-        </label>
-        <input
-          type="text"
-          name="image"
-          value={formData.image}
-          onChange={handleChange}
-         className={style['form-input']}
-                />
-                {errors.image && <p className={style['error-message']}>{errors.image}</p>}
 
-                <label htmlFor="lifeSpan" className={style['form-label']}>
-                  LifeSpan:
-                </label>
-                <input
-                  type="text"
-                  name="lifeSpan"
-                  value={formData.lifeSpan}
-                  onChange={handleChange}
-                  className={style['form-input']}
-                />
-                {errors.lifeSpan && <p className={style['error-message']}>{errors.lifeSpan}</p>}
+          <label htmlFor="lifeSpan" className={style['form-label']}>
+            LifeSpan:
+          </label>
+          <input
+            type="text"
+            name="lifeSpan"
+            value={formData.lifeSpan}
+            onChange={handleChange}
+            className={style['form-input']}
+          />
+            {errors.lifeSpan && <p className={style['error-message']}>{errors.lifeSpan}</p>}
 
-                <label htmlFor="temperament" className={style['form-label']}>
-                  Temperaments:
-                </label>
-                <input
-                  type="text"
-                  name="temperament"
-                  value={formData.temperament}
-                  onChange={handleChange}
-                  className={style['form-input']}
-                />
-                {errors.temperament && <p className={style['error-message']}>{errors.temperament}</p>}
-                {apiError && <p className={style['error-message']}>{apiError}</p>}
-                <button type="submit" className={style['form-button']}disabled={!isFormValid}>
-                  Crear Nueva Raza
-                </button>
-              </form>
 
-           
-            </div>
+
+          <label htmlFor="temperament" className={style['form-label']}>
+            Temperaments:
+          </label>
+          
+          <select
+              name="temperament"
+              value={formData.temperament}
+              onChange={handleChange}
+              className={style['form-input']}
+              multiple
+          >
+              
+              {temperaments &&
+              temperaments.map((temp) => (
+                <option key={temp} value={temp}>
+                {temp}
+                </option>
+              ))}
+          </select>
+      
+            {errors.temperament && <p className={style['error-message']}>{errors.temperament}</p>}
+            {apiError && <p className={style['error-message']}>{apiError}</p>}
+      
+          <button type="submit" className={style['form-button']}disabled={!isFormValid}>
+              Crear Nueva Raza
+         </button> 
+      </form>
+
+   </div>
           );
         };
 
-        export default FormPage;
+export default FormPage;

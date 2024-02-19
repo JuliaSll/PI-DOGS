@@ -1,4 +1,3 @@
-//actions,js
 import {
   SET_ORIGIN_FILTER,
   SET_ORDER_NAME,
