@@ -7,6 +7,7 @@ import LandingPage from './components/landingpage/LandingPage'
 import Detail from './components/detail/Detail'
 import HomePage from './components/homepage/HomePage'
 
+
 /* hooks */
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
@@ -46,6 +47,7 @@ const App = ()=> {
         <Route path='/home' element={<HomePage /> }/>
         <Route path='formpage' element={<FormPage temperaments={temperaments}/>}/>
         <Route path='/detail/:name' element={<Detail/>}/>
+      
       </Routes>
     </div>
   );

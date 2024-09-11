@@ -5,11 +5,12 @@ const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
-//Importa tus modelo
 const dogModel = require("./models/Dog");
+const dogAdoptionsModel = require("./models/DogAdoptions");
 const temperamentsModel = require("./models/Temperaments");
+const testimoniosModel = require("./models/Testimonios");
+const usuariosModel = require("./models/Usuarios");
 
-//Configura Sequelize
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/dogs`,
   {
@@ -19,10 +20,8 @@ const sequelize = new Sequelize(
 );
 const basename = path.basename(__filename);
 
-// Lee los archivos de modelos y los carga en Sequelize
 const modelDefiners = [];
 
-// Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
 fs.readdirSync(path.join(__dirname, "/models"))
   .filter(
     (file) =>
@@ -32,7 +31,6 @@ fs.readdirSync(path.join(__dirname, "/models"))
     modelDefiners.push(require(path.join(__dirname, "/models", file)));
   });
 
-// Capitalizamos los nombres de los modelos ie: product => Product
 let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [
   entry[0][0].toUpperCase() + entry[0].slice(1),
@@ -40,19 +38,36 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-//Define tus modelos
 dogModel(sequelize);
 temperamentsModel(sequelize);
+dogAdoptionsModel(sequelize);
+testimoniosModel(sequelize);
+usuariosModel(sequelize);
 
-// Aca vendrian las relaciones
+const { Dog, Temperaments, DogAdoptions, Testimonios, Usuarios } =
+  sequelize.models;
 
-const { Dog, Temperaments } = sequelize.models;
-Dog.belongsToMany(Temperaments, { through: "TemperamentDog" });
-Temperaments.belongsToMany(Dog, { through: "TemperamentDog" });
+Dog.belongsToMany(Temperaments, { through: "DogTemperament" });
+Temperaments.belongsToMany(Dog, { through: "DogTemperament" });
+
+Usuarios.hasMany(DogAdoptions, { foreignKey: "userId" });
+DogAdoptions.belongsTo(Usuarios, { foreignKey: "userId" });
+
+Usuarios.hasMany(Testimonios, { foreignKey: "userId" });
+Testimonios.belongsTo(Usuarios, { foreignKey: "userId" });
+
+DogAdoptions.hasOne(Testimonios, { foreignKey: "dogAdoptionId" });
+Testimonios.belongsTo(DogAdoptions, { foreignKey: "dogAdoptionId" });
+
+DogAdoptions.belongsToMany(Temperaments, { through: "AdoptionTemperament" });
+Temperaments.belongsToMany(DogAdoptions, { through: "AdoptionTemperament" });
 
 module.exports = {
-  ...sequelize.models, // para poder importar los modelos
-  conn: sequelize, // para importar la conexión
+  ...sequelize.models,
+  conn: sequelize,
   Dog,
   Temperaments,
+  DogAdoptions,
+  Testimonios,
+  Usuarios,
 };

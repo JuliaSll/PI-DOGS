@@ -1,68 +1,113 @@
-.homepage-container {
+.HomePage {
+  font-family: Arial, sans-serif;
+}
+
+.adoption-section {
+  padding: 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.carousel {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin-left: 40px;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
-.navbar-select-container {
+.dogContainer {
   display: flex;
-  align-items: center;
-  margin-bottom: 16px;
+  flex-wrap: nowrap;
+  transition: transform 0.5s ease;
+  width: 80%;
 }
 
-.search-bar-pagination-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
+.dogDescripcion {
+  margin: 10px 18px;
 }
 
-.filters-container {
-  display: flex;
-  gap: 10px;
+.dogItem {
+  flex: 0 0 33.33%;
+  margin: 0 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
-.cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.dogImage {
+  width: 80%;
+  margin-top: 10px;
+  height: 50%;
+  border-radius: 8px;
 }
 
-.homepage-card-container {
-  width: calc(33.33% - 20px);
-  box-sizing: border-box;
-  margin-bottom: 20px;
+.dogName {
+  font-size: 1.2em;
+  margin: 10px 0;
 }
 
-@media (max-width: 1024px) {
-  .homepage-card-container {
-    width: calc(50% - 20px);
-  }
+.dogInfo {
+  font-size: 1em;
+  margin: 5px 0;
 }
 
-@media (max-width: 767px) {
-  .homepage-card-container {
-    width: calc(50% - 20px);
-  }
+.prevButton,
+.nextButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1;
 }
 
-@media (max-width: 480px) {
-  .homepage-card-container {
-    width: 100%;
-    box-sizing: content-box;
-  }
+.prevButton {
+  left: 10px;
 }
 
-@media (max-width: 768px) and (min-width: 481px) {
-  .homepage-card-container {
-    width: calc(50% - 20px);
-  }
+.nextButton {
+  right: 10px;
 }
 
-@media (max-width: 480px) and (min-width: 0px) {
-  .homepage-card-container {
-    width: 100%;
-    box-sizing: border-box;
-  }
+.donationsBanner {
+  padding: 20px;
+  background-color: #ffefef;
+  text-align: center;
+}
+
+.donationButton {
+  background-color: #ff4c4c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.donationButton:hover {
+  background-color: #e04343;
+}
+
+.donationsSection {
+  padding: 20px;
+  background-color: #f0f0f0;
+  text-align: left;
+}
+
+.donationsSection h3 {
+  margin-top: 0;
+}
+
+.donationsSection ul {
+  list-style-type: disc;
+  padding-left: 20px;
 }
